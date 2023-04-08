@@ -1,13 +1,16 @@
+# A Hangman game made in the Ruby language
+
+# open the dictionary and chose a random word between 5 and 12 characters
 f = File.open("google-10000-english-no-swears.txt")
 pick = f.select {|w| w.size > 4 && w.size <13}.sample
 puts pick
 p pick
 puts pick.length
-pick_minus_newline = pick.strip()
-p pick_minus_newline
-@pick_array = pick_minus_newline.split(//)
+@pick_minus_newline = pick.strip()
+p @pick_minus_newline
+@pick_array = @pick_minus_newline.split(//)
 p @pick_array
-@pick_length = pick_minus_newline.length
+@pick_length = @pick_minus_newline.length
 puts @pick_length
 f.close
 
@@ -17,6 +20,7 @@ f.close
 
 puts "Your word has #{@pick_length} letters."
 
+# show underscores and blanks to represent the letters in the word
 @board = "_ " * @pick_length
 puts @board
 
@@ -25,52 +29,76 @@ puts @board
 @board_array = @board_minus_newline.split(" ")
 p @board_array
 
-
+# ask the player to guess a single letter
 def player_guess()
     puts "Choose a letter from A to Z."
     @input = gets.chomp 
-        until @input.match("[a-zA-Z]") && @input.length == 1 
-        puts "Make sure you have only entered a single  letter between A and Z."
+        until @input.match("[a-zA-Z]") && @input.length == 1 && @guess_array.include?(@input) == false
+        puts "Make sure you are entering a single letter between A and Z and that the letter has not yet been guessed."
         @input = gets.chomp
         end
     @guess_array << @input
     @turn_count += 1
 end
 
+# loop through an array of the correct letters and find if the player's guess matches any of them
 def match()
     @pick_array.each_with_index do |element,idx|
         #p element, idx
         if element == @input
             puts element
-            @board_array[idx] = element
-        
-=begin    
-        elsif element != @input
-            #puts "#{@input} is not in the puzzle."
-            @wrong_guess_array << @input unless @wrong_guess_array.include?(@input)
-=end   
-
-            
+            @board_array[idx] = element        
+       
         end
-
-    
-            #p @board_array
-
 
     end
     p @board_array
     puts @board_array.join(' ')
-    puts "This is the wrong guess array #{@wrong_guess_array}." 
-    puts "This is the right guess array #{@guess_array}."
+     
+    puts "This is the total guess array #{@guess_array}."
 end
 
-#def print_board()
-    
+# if the player's guess doesn't match, add that letter to the @wrong_guess_array
+def no_match()
+    if @pick_array.include?(@input) == false
+        @wrong_guess_array << @input
+    end
+    puts "This is the wrong guess array #{@wrong_guess_array}."
+end
+
+# alert the player that they have won when @board_array equals @pick_array
+def win()
+    if @board_array == @pick_array
+        @turn_count = 26
+        puts "You have won the game!"
+    end
+end
+
+# alert the player that they have lost when they have 8 incorrect guesses
+def lose()
+    if @wrong_guess_array.length == 8
+        puts "You have lost the game!  The word was #{@pick_minus_newline.upcase}.  Better luck next time."
+        @turn_count = 26
+    end
+end
+
+# exit the game after the player has won or lost
+def end_game()
+    if @turn_count == 26
+        exit
+    end
+end
+
+# initialize game play    
 def play_game()
 
     until @turn_count >= 26 do
         player_guess()
         match()
+        no_match()
+        win()
+        lose()
+        end_game()
     end
 end
 
