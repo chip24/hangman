@@ -4,14 +4,14 @@
 f = File.open("google-10000-english-no-swears.txt")
 pick = f.select {|w| w.size > 4 && w.size <13}.sample
 puts pick
-p pick
-puts pick.length
+#p pick
+#puts pick.length
 @pick_minus_newline = pick.strip()
-p @pick_minus_newline
+#p @pick_minus_newline
 @pick_array = @pick_minus_newline.split(//)
-p @pick_array
+#p @pick_array
 @pick_length = @pick_minus_newline.length
-puts @pick_length
+#puts @pick_length
 f.close
 
 @guess_array = []
@@ -27,11 +27,11 @@ puts @board
 @board_minus_newline = @board.strip()
 
 @board_array = @board_minus_newline.split(" ")
-p @board_array
+#p @board_array
 
 # ask the player to guess a single letter
 def player_guess()
-    puts "Choose a letter from A to Z."
+    puts "\nChoose a letter from A to Z."
     @input = gets.chomp 
         until @input.match("[a-zA-Z]") && @input.length == 1 && @guess_array.include?(@input) == false
         puts "Make sure you are entering a single letter between A and Z and that the letter has not yet been guessed."
@@ -45,25 +45,34 @@ end
 def match()
     @pick_array.each_with_index do |element,idx|
         #p element, idx
+    
         if element == @input
-            puts element
+            #puts element
             @board_array[idx] = element        
        
-        end
-
+            
+            
+            #puts "This is the total guess array #{@guess_array}."
+            puts "#{@input.upcase} is in the word!"
+            puts "Your guesses so far are #{@guess_array.join(" - ").upcase}."
+        end        
     end
-    p @board_array
+    #p @board_array
     puts @board_array.join(' ')
-     
-    puts "This is the total guess array #{@guess_array}."
 end
 
 # if the player's guess doesn't match, add that letter to the @wrong_guess_array
 def no_match()
     if @pick_array.include?(@input) == false
         @wrong_guess_array << @input
+    
+    puts "#{@input.upcase} is NOT in the word."
+    #puts "This is the wrong guess array #{@wrong_guess_array}."
+    puts "Your guesses so far are #{@guess_array.join(" - ").upcase}."
+    puts "*** You have #{8-@wrong_guess_array.length} wrong guess(es) left. ***"
+    puts @board_array.join(' ')    
     end
-    puts "This is the wrong guess array #{@wrong_guess_array}."
+    
 end
 
 # alert the player that they have won when @board_array equals @pick_array
@@ -71,6 +80,7 @@ def win()
     if @board_array == @pick_array
         @turn_count = 26
         puts "You have won the game!"
+        puts "The word was #{@pick_minus_newline.upcase}."
     end
 end
 
@@ -101,6 +111,7 @@ def play_game()
         end_game()
     end
 end
+
 
 play_game()
 
