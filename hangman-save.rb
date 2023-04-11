@@ -1,4 +1,5 @@
 # A Hangman game made with classes in the Ruby language
+require "yaml"
 
 class Game
     # open the dictionary and chose a random word between 5 and 12 characters
@@ -33,15 +34,23 @@ class Game
 
     # ask the player to guess a single letter
     def player_guess()
-        puts "\nChoose a letter from A to Z."
+        puts "\nChoose a letter from A to Z or type SAVE to save your game."
         @input = gets.chomp 
+        if @input == "SAVE"
+            save_game()
+        else
             until @input.match("[a-zA-Z]") && @input.length == 1 && @@guess_array.include?(@input) == false
             puts "Make sure you are entering a single letter between A and Z and that the letter has not yet been guessed."
             @input = gets.chomp
             end
+        
         @@guess_array << @input
         @@turn_count += 1
+        end
     end
+
+   
+        
 
     # loop through an array of the correct letters and find if the player's guess matches any of them
     def match()
@@ -114,7 +123,18 @@ class Game
         end
     end
 
-    
+    def save_game()
+        yaml = YAML::dump(c)
+        game_file = GameFile.new("/my_game/saved.yaml")
+        game_file.write(yaml)
+    end
+
+    def load_game
+        game_file = GameFile.new("/my_game/saved.yaml")
+        yaml = game_file.read
+        YAML::load(yaml)
+    end
+
         
 end
 
