@@ -13,23 +13,23 @@ class Game
     #p @@pick_minus_newline
     @@pick_array = @@pick_minus_newline.split(//)
     #p @@pick_array
-    @pick_length = @@pick_minus_newline.length
-    puts @pick_length
+    @@pick_length = @@pick_minus_newline.length
+    puts @@pick_length
     f.close
      
     @@guess_array = []
     @@wrong_guess_array = []
     @@turn_count = 0
 
-    puts "Your word has #{@pick_length} letters."
+    puts "Your word has #{@@pick_length} letters."
 
     # show underscores and blanks to represent the letters in the word
-    @board = "_ " * @pick_length
-    puts @board
+    @@board = "_ " * @@pick_length
+    puts @@board
 
-    @board_minus_newline = @board.strip()
+    @@board_minus_newline = @@board.strip()
 
-    @@board_array = @board_minus_newline.split(" ")
+    @@board_array = @@board_minus_newline.split(" ")
     #p @@board_array
 
     # ask the player to guess a single letter
@@ -37,7 +37,7 @@ class Game
         puts "\nChoose a letter from A to Z or type SAVE to save your game."
         @input = gets.chomp 
         if @input == "SAVE"
-            save_game()
+            save_game(Game)
         else
             until @input.match("[a-zA-Z]") && @input.length == 1 && @@guess_array.include?(@input) == false
             puts "Make sure you are entering a single letter between A and Z and that the letter has not yet been guessed."
@@ -59,15 +59,18 @@ class Game
         
             if element == @input
                 #puts element
-                @@board_array[idx] = element        
-        
-                
-                
+                @@board_array[idx] = element
+            end        
+            
+        end
+       
+        if @@pick_array.include?(@input) == true  
                 #puts "This is the total guess array #{@@guess_array}."
                 puts "#{@input.upcase} is in the word!"
                 puts "Your guesses so far are #{@@guess_array.join(" - ").upcase}."
-            end        
         end
+                    
+    
         #p @@board_array
         puts @@board_array.join(' ')
     end
@@ -123,16 +126,42 @@ class Game
         end
     end
 
-    def save_game()
-        yaml = YAML::dump(c)
-        game_file = GameFile.new("/my_game/saved.yaml")
-        game_file.write(yaml)
+    def save_game(obj)
+        #yaml = YAML::dump()
+        #game_file = GameFile.new("/my_game/saved.yaml")
+        #game_file.write(yaml)
+        #file = File.open("./hangman.yml", "w") do |f| YAML.dump(f)
+        #file = File.open("./hangman.yml", "w") {|f| f.write(Game.to_yaml)}    
+        pick_minus_newline = @@pick_minus_newline
+        pick_array = @@pick_array
+        pick_length = @@pick_length
+        guess_array = @@guess_array
+        wrong_guess_array = @@wrong_guess_array
+        turn_count = @@turn_count
+        board = @@board
+        board_minus_newline = @@board_minus_newline 
+        board_array = @@board_array       
+
+
+
+
+        @game_details = [pick_minus_newline, pick_array, pick_length, guess_array, wrong_guess_array, turn_count, board, board_minus_newline, board_array]
+        File.open("./hangman.yml", "w") do |file| file.write(@game_details.to_yaml)
+        end
+
+        puts "You're logging out of Hangman."
+        #file.close
+        exit
     end
 
     def load_game
-        game_file = GameFile.new("/my_game/saved.yaml")
-        yaml = game_file.read
-        YAML::load(yaml)
+        #game_file = GameFile.new("/my_game/saved.yaml")
+        #yaml = game_file.read
+        #YAML::load(yaml)
+        begin
+            yaml = YAML.load_file("./hangman.yml"
+            )
+        end
     end
 
         

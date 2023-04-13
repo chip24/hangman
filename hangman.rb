@@ -50,15 +50,19 @@ class Game
         
             if element == @input
                 #puts element
-                @@board_array[idx] = element        
-        
-                
-                
-                #puts "This is the total guess array #{@@guess_array}."
-                puts "#{@input.upcase} is in the word!"
-                puts "Your guesses so far are #{@@guess_array.join(" - ").upcase}."
-            end        
+                @@board_array[idx] = element 
+            end
+            
         end
+
+        
+        if @@pick_array.include?(@input) == true  
+            #puts "This is the total guess array #{@@guess_array}."
+            puts "#{@input.upcase} is in the word!"
+            puts "Your guesses so far are #{@@guess_array.join(" - ").upcase}."        
+                
+        end        
+    
         #p @@board_array
         puts @@board_array.join(' ')
     end
