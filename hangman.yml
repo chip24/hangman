@@ -1,37 +1,26 @@
----
-- quantities
-- - q
-  - u
+--- !ruby/object:Game
+input: SAVE
+game_details:
+- carol
+- - c
   - a
-  - "n"
-  - t
-  - i
-  - t
-  - i
-  - e
-  - s
-- 10
-- - q
-  - u
-  - t
+  - r
+  - o
+  - l
+- 5
+- - c
+  - a
   - w
-  - d
-  - j
-  - k
+  - q
+  - p
 - - w
-  - d
-  - j
-  - k
-- 7
-- '_ _ _ _ _ _ _ _ _ _ '
-- _ _ _ _ _ _ _ _ _ _
-- - q
-  - u
-  - _
-  - _
-  - t
-  - _
-  - t
+  - q
+  - p
+- 5
+- '_ _ _ _ _ '
+- _ _ _ _ _
+- - c
+  - a
   - _
   - _
   - _

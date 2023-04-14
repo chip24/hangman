@@ -3,7 +3,9 @@ require "yaml"
 
 class Game
     # open the dictionary and chose a random word between 5 and 12 characters
-    
+    attr_reader :pick_minus_newline, :pick_array, :pick_length, :guess_array, :wrong_guess_array, :turn_count, :board, :board_minus_newline, :board_array
+
+
     f = File.open("google-10000-english-no-swears.txt")
     pick = f.select {|w| w.size > 4 && w.size <13}.sample
     puts pick
@@ -132,6 +134,7 @@ class Game
         #game_file.write(yaml)
         #file = File.open("./hangman.yml", "w") do |f| YAML.dump(f)
         #file = File.open("./hangman.yml", "w") {|f| f.write(Game.to_yaml)}    
+=begin
         pick_minus_newline = @@pick_minus_newline
         pick_array = @@pick_array
         pick_length = @@pick_length
@@ -141,16 +144,19 @@ class Game
         board = @@board
         board_minus_newline = @@board_minus_newline 
         board_array = @@board_array       
+=end
 
 
 
-
-        @game_details = [pick_minus_newline, pick_array, pick_length, guess_array, wrong_guess_array, turn_count, board, board_minus_newline, board_array]
-        File.open("./hangman.yml", "w") do |file| file.write(@game_details.to_yaml)
+        @game_details = {
+        "pick_minus_newline"=>@@pick_minus_newline, @@pick_array, @@pick_length, @@guess_array, @@wrong_guess_array, @@turn_count, @@board, @@board_minus_newline, @@board_array}
+        #File.open("./hangman.yml", "w") do |file| file.write(@game_details.to_yaml)
+        file = File.open("./hangman.yml", "w") do |f| YAML.dump(self, f)
         end
+        
 
         puts "You're logging out of Hangman."
-        #file.close
+        file.close
         exit
     end
 
