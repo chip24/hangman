@@ -1,26 +1,41 @@
 --- !ruby/object:Game
 input: SAVE
 game_details:
-- carol
-- - c
-  - a
-  - r
+- :pick_minus_newline: montgomery
+  :pick_array:
+  - m
   - o
-  - l
-- 5
-- - c
-  - a
+  - "n"
+  - t
+  - g
+  - o
+  - m
+  - e
+  - r
+  - "y"
+  :pick_length: 10
+  :guess_array:
+  - m
+  - o
+  - "n"
+  - "y"
+  - g
   - w
   - q
-  - p
-- - w
+  :wrong_guess_array:
+  - w
   - q
-  - p
-- 5
-- '_ _ _ _ _ '
-- _ _ _ _ _
-- - c
-  - a
+  :turn_count: 7
+  :board: '_ _ _ _ _ _ _ _ _ _ '
+  :board_minus_newline: _ _ _ _ _ _ _ _ _ _
+  :board_array:
+  - m
+  - o
+  - "n"
+  - _
+  - g
+  - o
+  - m
   - _
   - _
-  - _
+  - "y"
