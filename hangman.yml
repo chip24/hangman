@@ -1,41 +1,43 @@
---- !ruby/object:Game
-input: SAVE
-game_details:
-- :pick_minus_newline: montgomery
+---
+- :pick_minus_newline: discussions
   :pick_array:
-  - m
+  - d
+  - i
+  - s
+  - c
+  - u
+  - s
+  - s
+  - i
   - o
   - "n"
-  - t
-  - g
-  - o
-  - m
+  - s
+  :pick_length: 11
+  :guess_array:
+  - d
+  - i
+  - s
+  - q
+  - w
   - e
   - r
-  - "y"
-  :pick_length: 10
-  :guess_array:
-  - m
-  - o
-  - "n"
-  - "y"
-  - g
-  - w
-  - q
   :wrong_guess_array:
-  - w
   - q
+  - w
+  - e
+  - r
   :turn_count: 7
-  :board: '_ _ _ _ _ _ _ _ _ _ '
-  :board_minus_newline: _ _ _ _ _ _ _ _ _ _
+  :board: '_ _ _ _ _ _ _ _ _ _ _ '
+  :board_minus_newline: _ _ _ _ _ _ _ _ _ _ _
   :board_array:
-  - m
-  - o
-  - "n"
-  - _
-  - g
-  - o
-  - m
+  - d
+  - i
+  - s
   - _
   - _
-  - "y"
+  - s
+  - s
+  - i
+  - _
+  - _
+  - s

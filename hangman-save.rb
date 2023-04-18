@@ -153,13 +153,14 @@ class Game
         board = @@board
         board_minus_newline = @@board_minus_newline 
         board_array = @@board_array       
+
 =end
 
 
-
         @game_details = [{:pick_minus_newline => @@pick_minus_newline, :pick_array => @@pick_array, :pick_length => @@pick_length, :guess_array => @@guess_array, :wrong_guess_array => @@wrong_guess_array, :turn_count => @@turn_count, :board => @@board, :board_minus_newline => @@board_minus_newline, :board_array => @@board_array}]
+
         #File.open("./hangman.yml", "w") do |file| file.write(@game_details.to_yaml)
-        file = File.open("./hangman.yml", "w") do |f| YAML.dump(self, f)
+        file = File.open("./hangman.yml", "w") do |f| YAML.dump(@game_details, f)
         end
         
 
@@ -172,8 +173,32 @@ class Game
         #File.open("./hangman.yml", 'r') do |f|
             #loaded_game = YAML.load(f)
         #loaded_game = open("./hangman.yml"){ |f| YAML.load(f)}
+
+        # This line below will load the game if placed in the 
+        loaded_game = open("./hangman.yml") {|f| YAML.unsafe_load_file(f)}
+    
+        p loaded_game
+        p loaded_game.class
 =begin
-        @@pick_minus_newline = loaded_game.pick_minus_newline
+        result = {}.tap do |result|
+            loaded_game.each do |hash|
+                hash. each do |key, value|
+                    #result[key] || = []
+                    result[key] << value
+                end
+            end
+        end
+
+       
+
+        
+        
+        
+        
+
+        
+        @@pick_minus_newline = loaded_game["game_details"][":pick_minus_newline"]
+        #puts @@pick_minus_newline
         @@pick_array = loaded_game.pick_array
         @@pick_length = loaded_game.pick_length
         @@guess_array = loaded_game.guess_array
@@ -182,14 +207,14 @@ class Game
         @@board = loaded_game.board
         @@board_minus_newline = loaded_game.board_minus_newline
         @@board_array = loaded_game.board_array
-=end
-        # This line below will load the game if placed in the 
-        loaded_game = open("./hangman.yml") {|f| YAML.unsafe_load_file(f)}
+
+=end        
             
-        p loaded_game
+        
+
+
     end
 
-        
 end
 
 
@@ -208,7 +233,7 @@ new_or_saved = gets.chomp
         elsif new_or_saved == "2"
             game = Game.new
             game.load_game()
-            game.play_game()
+            #game.play_game()
 
         end
 
