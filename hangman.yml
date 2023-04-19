@@ -1,43 +1,30 @@
 ---
-- :pick_minus_newline: discussions
-  :pick_array:
-  - d
-  - i
-  - s
-  - c
-  - u
-  - s
-  - s
-  - i
-  - o
-  - "n"
-  - s
-  :pick_length: 11
-  :guess_array:
-  - d
-  - i
-  - s
-  - q
-  - w
-  - e
-  - r
-  :wrong_guess_array:
-  - q
-  - w
-  - e
-  - r
-  :turn_count: 7
-  :board: '_ _ _ _ _ _ _ _ _ _ _ '
-  :board_minus_newline: _ _ _ _ _ _ _ _ _ _ _
-  :board_array:
-  - d
-  - i
-  - s
-  - _
-  - _
-  - s
-  - s
-  - i
-  - _
-  - _
-  - s
+pick_minus_newline: expand
+pick_array:
+- e
+- x
+- p
+- a
+- "n"
+- d
+pick_length: 6
+guess_array:
+- e
+- g
+- j
+- f
+- d
+wrong_guess_array:
+- g
+- j
+- f
+turn_count: 5
+board: '_ _ _ _ _ _ '
+board_minus_newline: _ _ _ _ _ _
+board_array:
+- e
+- _
+- _
+- _
+- _
+- d

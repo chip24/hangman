@@ -137,6 +137,20 @@ class Game
         end
     end
 
+    def play_loaded_game()
+        load_game()
+        display_board()
+        until @@turn_count >= 26 do
+            player_guess()
+            match()
+            no_match()
+            win()
+            lose()
+            end_game()
+        end
+    end
+        
+
     def save_game()
         #yaml = YAML::dump()
         #game_file = GameFile.new("/my_game/saved.yaml")
@@ -157,7 +171,7 @@ class Game
 =end
 
 
-        @game_details = [{:pick_minus_newline => @@pick_minus_newline, :pick_array => @@pick_array, :pick_length => @@pick_length, :guess_array => @@guess_array, :wrong_guess_array => @@wrong_guess_array, :turn_count => @@turn_count, :board => @@board, :board_minus_newline => @@board_minus_newline, :board_array => @@board_array}]
+        @game_details = {"pick_minus_newline" => @@pick_minus_newline, "pick_array" => @@pick_array, "pick_length" => @@pick_length, "guess_array" => @@guess_array, "wrong_guess_array" => @@wrong_guess_array, "turn_count" => @@turn_count, "board" => @@board, "board_minus_newline" => @@board_minus_newline, "board_array" => @@board_array}
 
         #File.open("./hangman.yml", "w") do |file| file.write(@game_details.to_yaml)
         file = File.open("./hangman.yml", "w") do |f| YAML.dump(@game_details, f)
@@ -175,10 +189,26 @@ class Game
         #loaded_game = open("./hangman.yml"){ |f| YAML.load(f)}
 
         # This line below will load the game if placed in the 
-        loaded_game = open("./hangman.yml") {|f| YAML.unsafe_load_file(f)}
+        loaded_game = open("./hangman.yml") {|f| YAML.load(f)}
     
         p loaded_game
         p loaded_game.class
+        #p loaded_game['pick_minus_newline']
+        @@pick_minus_newline = loaded_game["pick_minus_newline"]
+        p @@pick_minus_newline
+        p @@pick_array = loaded_game["pick_array"]
+        p @@pick_length = loaded_game["pick_length"]
+        p @@guess_array = loaded_game["guess_array"]
+        p @@wrong_guess_array = loaded_game["guess_array"] 
+        p @@turn_count = loaded_game["turn_count"] 
+        p @@board = loaded_game["board"]
+        p @@board_minus_newline = loaded_game["board_minus_newline"] 
+        p @@board_array = loaded_game["board_array"]
+
+        #@@pick_minus_newline = loaded_game[0]
+        #p @@pick_minus_newline
+
+        #p loaded_game[":pick_array"]
 =begin
         result = {}.tap do |result|
             loaded_game.each do |hash|
@@ -232,7 +262,8 @@ new_or_saved = gets.chomp
 
         elsif new_or_saved == "2"
             game = Game.new
-            game.load_game()
+            game.play_loaded_game()
+            
             #game.play_game()
 
         end
