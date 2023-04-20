@@ -11,25 +11,21 @@ class Game
     @@wrong_guess_array = []
     @@turn_count = 0
     
+    # open the dictionary file and choose a word 
     def get_word()
         f = File.open("google-10000-english-no-swears.txt")
         pick = f.select {|w| w.size > 4 && w.size <13}.sample
         puts pick
-        #p pick
-        #puts pick.length
         @@pick_minus_newline = pick.strip()
-        #p @@pick_minus_newline
         @@pick_array = @@pick_minus_newline.split(//)
-        #p @@pick_array
         @@pick_length = @@pick_minus_newline.length
         puts @@pick_length
         f.close
     end
-     
+   # display the board as a series of underscores and tell the number of letters in the word  
     def display_board()
 
         puts "Your word has #{@@pick_length} letters."
-
         # show underscores and blanks to represent the letters in the word
         @@board = "_ " * @@pick_length
         puts @@board
@@ -37,10 +33,8 @@ class Game
         @@board_minus_newline = @@board.strip()
 
         @@board_array = @@board_minus_newline.split(" ")
-        #p @@board_array
+
     end
-
-
 
     # ask the player to guess a single letter
     def player_guess()
@@ -59,9 +53,6 @@ class Game
         end
     end
 
-   
-        
-
     # loop through an array of the correct letters and find if the player's guess matches any of them
     def match()
         @@pick_array.each_with_index do |element,idx|
@@ -75,27 +66,31 @@ class Game
         end
        
         if @@pick_array.include?(@input) == true  
-                #puts "This is the total guess array #{@@guess_array}."
+                
                 puts "#{@input.upcase} is in the word!"
                 puts "Your guesses so far are #{@@guess_array.join(" - ").upcase}."
         end
                     
     
-        #p @@board_array
+        # show the board with the correct guesses in it
         puts @@board_array.join(' ')
     end
 
     # if the player's guess doesn't match, add that letter to the @@wrong_guess_array
     def no_match()
+        p @@pick_array
+        p @input
         if @@pick_array.include?(@input) == false
+            puts @@pick_array.include?(@input)
             @@wrong_guess_array << @input
         
-        puts "#{@input.upcase} is NOT in the word."
-        #puts "This is the wrong guess array #{@@wrong_guess_array}."
-        puts "Your guesses so far are #{@@guess_array.join(" - ").upcase}."
-        puts "*** You have #{8-@@wrong_guess_array.length} wrong guess(es) left. ***"
-        puts @@board_array.join(' ')    
+            puts "#{@input.upcase} is NOT in the word."
         end
+            
+            puts "Your guesses so far are #{@@guess_array.join(" - ").upcase}."
+            puts "*** You have #{8-@@wrong_guess_array.length} wrong guess(es) left. ***"
+            puts @@board_array.join(' ')    
+        
         
     end
 
@@ -123,7 +118,7 @@ class Game
         end
     end
 
-    # initialize game play    
+    # initialize game play for a new game   
     def play_game()
         get_word()
         display_board()
@@ -136,10 +131,19 @@ class Game
             end_game()
         end
     end
-
+    # initialize game play for a loaded game
     def play_loaded_game()
         load_game()
-        display_board()
+        puts "Welcome back to your saved game."
+        puts "Your board is below."
+        puts @@board_array.join(' ')
+        puts "Below are your guesses so far."
+        puts @@guess_array.join(" - ").upcase
+        puts @@wrong_guess_array.length
+        puts @@turn_count
+        p @@wrong_guess_array
+        puts "You have #{8 - @@wrong_guess_array.length} wrong guesses left."
+        #display_board()
         until @@turn_count >= 26 do
             player_guess()
             match()
@@ -150,30 +154,11 @@ class Game
         end
     end
         
-
+# save game information to a ymml file and exit the game
     def save_game()
-        #yaml = YAML::dump()
-        #game_file = GameFile.new("/my_game/saved.yaml")
-        #game_file.write(yaml)
-        #file = File.open("./hangman.yml", "w") do |f| YAML.dump(f)
-        #file = File.open("./hangman.yml", "w") {|f| f.write(Game.to_yaml)}    
-=begin
-        pick_minus_newline = @@pick_minus_newline
-        pick_array = @@pick_array
-        pick_length = @@pick_length
-        guess_array = @@guess_array
-        wrong_guess_array = @@wrong_guess_array
-        turn_count = @@turn_count
-        board = @@board
-        board_minus_newline = @@board_minus_newline 
-        board_array = @@board_array       
-
-=end
-
-
+        
         @game_details = {"pick_minus_newline" => @@pick_minus_newline, "pick_array" => @@pick_array, "pick_length" => @@pick_length, "guess_array" => @@guess_array, "wrong_guess_array" => @@wrong_guess_array, "turn_count" => @@turn_count, "board" => @@board, "board_minus_newline" => @@board_minus_newline, "board_array" => @@board_array}
 
-        #File.open("./hangman.yml", "w") do |file| file.write(@game_details.to_yaml)
         file = File.open("./hangman.yml", "w") do |f| YAML.dump(@game_details, f)
         end
         
@@ -182,13 +167,9 @@ class Game
         file.close
         exit
     end
-
+# load the information of a saved game stored in a yml file 
     def load_game()
-        #File.open("./hangman.yml", 'r') do |f|
-            #loaded_game = YAML.load(f)
-        #loaded_game = open("./hangman.yml"){ |f| YAML.load(f)}
-
-        # This line below will load the game if placed in the 
+        
         loaded_game = open("./hangman.yml") {|f| YAML.load(f)}
     
         p loaded_game
@@ -199,55 +180,17 @@ class Game
         p @@pick_array = loaded_game["pick_array"]
         p @@pick_length = loaded_game["pick_length"]
         p @@guess_array = loaded_game["guess_array"]
-        p @@wrong_guess_array = loaded_game["guess_array"] 
+        p @@wrong_guess_array = loaded_game["wrong_guess_array"] 
         p @@turn_count = loaded_game["turn_count"] 
         p @@board = loaded_game["board"]
         p @@board_minus_newline = loaded_game["board_minus_newline"] 
         p @@board_array = loaded_game["board_array"]
 
-        #@@pick_minus_newline = loaded_game[0]
-        #p @@pick_minus_newline
-
-        #p loaded_game[":pick_array"]
-=begin
-        result = {}.tap do |result|
-            loaded_game.each do |hash|
-                hash. each do |key, value|
-                    #result[key] || = []
-                    result[key] << value
-                end
-            end
-        end
-
-       
-
-        
-        
-        
-        
-
-        
-        @@pick_minus_newline = loaded_game["game_details"][":pick_minus_newline"]
-        #puts @@pick_minus_newline
-        @@pick_array = loaded_game.pick_array
-        @@pick_length = loaded_game.pick_length
-        @@guess_array = loaded_game.guess_array
-        @@wrong_guess_array = loaded_game.wrong_guess_array
-        @@turn_count = loaded_game.turn_count
-        @@board = loaded_game.board
-        @@board_minus_newline = loaded_game.board_minus_newline
-        @@board_array = loaded_game.board_array
-
-=end        
-            
-        
-
-
     end
 
 end
 
-
+# welcome player to game and have them choose to begin a new game or resume a saved game
 puts "Welcome to HANGMAN! Enter 1 to start a new game or 2 to load a saved game."
 new_or_saved = gets.chomp
     until new_or_saved == "1" || new_or_saved == "2"
@@ -264,14 +207,13 @@ new_or_saved = gets.chomp
             game = Game.new
             game.play_loaded_game()
             
-            #game.play_game()
+        
 
         end
 
 
 
-#game = Game.new
-#game.play_game()
+
 
 
 

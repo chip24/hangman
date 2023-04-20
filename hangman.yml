@@ -1,30 +1,35 @@
 ---
-pick_minus_newline: expand
+pick_minus_newline: jamaica
 pick_array:
-- e
-- x
-- p
-- a
-- "n"
-- d
-pick_length: 6
-guess_array:
-- e
-- g
 - j
-- f
-- d
+- a
+- m
+- a
+- i
+- c
+- a
+pick_length: 7
+guess_array:
+- g
+- h
+- i
+- k
+- l
+- w
 wrong_guess_array:
 - g
-- j
-- f
-turn_count: 5
-board: '_ _ _ _ _ _ '
-board_minus_newline: _ _ _ _ _ _
+- h
+- k
+- l
+- w
+turn_count: 6
+board: '_ _ _ _ _ _ _ '
+board_minus_newline: _ _ _ _ _ _ _
 board_array:
-- e
 - _
 - _
 - _
 - _
-- d
+- i
+- _
+- _
