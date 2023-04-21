@@ -78,10 +78,10 @@ class Game
 
     # if the player's guess doesn't match, add that letter to the @@wrong_guess_array
     def no_match()
-        p @@pick_array
-        p @input
+        #p @@pick_array
+        #p @input
         if @@pick_array.include?(@input) == false
-            puts @@pick_array.include?(@input)
+            #puts @@pick_array.include?(@input)
             @@wrong_guess_array << @input
         
             puts "#{@input.upcase} is NOT in the word."
@@ -139,9 +139,9 @@ class Game
         puts @@board_array.join(' ')
         puts "Below are your guesses so far."
         puts @@guess_array.join(" - ").upcase
-        puts @@wrong_guess_array.length
-        puts @@turn_count
-        p @@wrong_guess_array
+        #puts @@wrong_guess_array.length
+        #puts @@turn_count
+        #p @@wrong_guess_array
         puts "You have #{8 - @@wrong_guess_array.length} wrong guesses left."
         #display_board()
         until @@turn_count >= 26 do
@@ -172,19 +172,19 @@ class Game
         
         loaded_game = open("./hangman.yml") {|f| YAML.load(f)}
     
-        p loaded_game
-        p loaded_game.class
-        #p loaded_game['pick_minus_newline']
+        #p loaded_game
+        #p loaded_game.class
+        p loaded_game['pick_minus_newline']
         @@pick_minus_newline = loaded_game["pick_minus_newline"]
-        p @@pick_minus_newline
-        p @@pick_array = loaded_game["pick_array"]
-        p @@pick_length = loaded_game["pick_length"]
-        p @@guess_array = loaded_game["guess_array"]
-        p @@wrong_guess_array = loaded_game["wrong_guess_array"] 
-        p @@turn_count = loaded_game["turn_count"] 
-        p @@board = loaded_game["board"]
-        p @@board_minus_newline = loaded_game["board_minus_newline"] 
-        p @@board_array = loaded_game["board_array"]
+        @@pick_minus_newline
+        @@pick_array = loaded_game["pick_array"]
+        @@pick_length = loaded_game["pick_length"]
+        @@guess_array = loaded_game["guess_array"]
+        @@wrong_guess_array = loaded_game["wrong_guess_array"] 
+        @@turn_count = loaded_game["turn_count"] 
+        @@board = loaded_game["board"]
+        @@board_minus_newline = loaded_game["board_minus_newline"] 
+        @@board_array = loaded_game["board_array"]
 
     end
 

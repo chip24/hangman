@@ -1,28 +1,26 @@
 ---
-pick_minus_newline: jamaica
+pick_minus_newline: billion
 pick_array:
-- j
-- a
-- m
-- a
+- b
 - i
-- c
-- a
+- l
+- l
+- i
+- o
+- "n"
 pick_length: 7
 guess_array:
-- g
-- h
-- i
-- k
-- l
+- t
+- o
+- "y"
 - w
+- q
 wrong_guess_array:
-- g
-- h
-- k
-- l
+- t
+- "y"
 - w
-turn_count: 6
+- q
+turn_count: 5
 board: '_ _ _ _ _ _ _ '
 board_minus_newline: _ _ _ _ _ _ _
 board_array:
@@ -30,6 +28,6 @@ board_array:
 - _
 - _
 - _
-- i
 - _
+- o
 - _
